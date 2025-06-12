@@ -395,6 +395,7 @@ abstract class InAppPurchaseApi {
   PlatformBillingResult startConnection(
       int callbackHandle,
       PlatformBillingChoiceMode billingMode,
+      bool shouldEnableExternalOffer,
       PlatformPendingPurchasesParams pendingPurchasesParams);
 
   /// Wraps BillingClient#endConnection(BillingClientStateListener).

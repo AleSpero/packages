@@ -3114,7 +3114,7 @@ public class Messages {
     @NonNull 
     Boolean isReady();
     /** Wraps BillingClient#startConnection(BillingClientStateListener). */
-    void startConnection(@NonNull Long callbackHandle, @NonNull PlatformBillingChoiceMode billingMode, boolean enableExternalOffers, @NonNull PlatformPendingPurchasesParams pendingPurchasesParams, @NonNull Result<PlatformBillingResult> result);
+    void startConnection(@NonNull Long callbackHandle, @NonNull PlatformBillingChoiceMode billingMode, @NonNull Boolean shouldEnableExternalOffer, @NonNull PlatformPendingPurchasesParams pendingPurchasesParams, @NonNull Result<PlatformBillingResult> result);
     /** Wraps BillingClient#endConnection(BillingClientStateListener). */
     void endConnection();
     /** Wraps BillingClient#getBillingConfigAsync(GetBillingConfigParams, BillingConfigResponseListener). */
@@ -3190,7 +3190,8 @@ public class Messages {
                 ArrayList<Object> args = (ArrayList<Object>) message;
                 Long callbackHandleArg = (Long) args.get(0);
                 PlatformBillingChoiceMode billingModeArg = (PlatformBillingChoiceMode) args.get(1);
-                PlatformPendingPurchasesParams pendingPurchasesParamsArg = (PlatformPendingPurchasesParams) args.get(2);
+                Boolean shouldEnableExternalOfferArg = (Boolean) args.get(2);
+                PlatformPendingPurchasesParams pendingPurchasesParamsArg = (PlatformPendingPurchasesParams) args.get(3);
                 Result<PlatformBillingResult> resultCallback =
                     new Result<PlatformBillingResult>() {
                       public void success(PlatformBillingResult result) {
@@ -3204,7 +3205,7 @@ public class Messages {
                       }
                     };
 
-                api.startConnection(callbackHandleArg, billingModeArg, pendingPurchasesParamsArg, resultCallback);
+                api.startConnection(callbackHandleArg, billingModeArg, shouldEnableExternalOfferArg, pendingPurchasesParamsArg, resultCallback);
               });
         } else {
           channel.setMessageHandler(null);

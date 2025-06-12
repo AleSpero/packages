@@ -92,6 +92,7 @@ class BillingClient {
   Future<BillingResultWrapper> startConnection({
     required OnBillingServiceDisconnected onBillingServiceDisconnected,
     BillingChoiceMode billingChoiceMode = BillingChoiceMode.playBillingOnly,
+    bool shouldEnableExternalOffers = false,
     PendingPurchasesParamsWrapper? pendingPurchasesParams,
   }) async {
     hostCallbackHandler.disconnectCallbacks.add(onBillingServiceDisconnected);
@@ -99,6 +100,7 @@ class BillingClient {
       await _hostApi.startConnection(
         hostCallbackHandler.disconnectCallbacks.length - 1,
         platformBillingChoiceMode(billingChoiceMode),
+        shouldEnableExternalOffers,
         switch (pendingPurchasesParams) {
           final PendingPurchasesParamsWrapper params =>
             pendingPurchasesParamsFromWrapper(params),
@@ -330,8 +332,7 @@ class BillingClient {
   }
 
   /// Shows the alternative billing only information dialog on top of the calling app.
-  Future<BillingResultWrapper>
-  showExternalOfferInformationDialog() async {
+  Future<BillingResultWrapper> showExternalOfferInformationDialog() async {
     return resultWrapperFromPlatform(
         await _hostApi.showExternalOfferInformationDialog());
   }
@@ -339,7 +340,7 @@ class BillingClient {
   /// The details used to report transactions made via alternative billing
   /// without user choice to use Google Play billing.
   Future<AlternativeBillingOnlyReportingDetailsWrapper>
-  createExternalOfferReportingDetailsAsync() async {
+      createExternalOfferReportingDetailsAsync() async {
     return alternativeBillingOnlyReportingDetailsWrapperFromPlatform(
         await _hostApi.createExternalOfferReportingDetailsAsync());
   }

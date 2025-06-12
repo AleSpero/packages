@@ -1042,7 +1042,7 @@ class InAppPurchaseApi {
   }
 
   /// Wraps BillingClient#startConnection(BillingClientStateListener).
-  Future<PlatformBillingResult> startConnection(int callbackHandle, PlatformBillingChoiceMode billingMode, PlatformPendingPurchasesParams pendingPurchasesParams) async {
+  Future<PlatformBillingResult> startConnection(int callbackHandle, PlatformBillingChoiceMode billingMode, bool shouldEnableExternalOffer, PlatformPendingPurchasesParams pendingPurchasesParams) async {
     final String pigeonVar_channelName = 'dev.flutter.pigeon.in_app_purchase_android.InAppPurchaseApi.startConnection$pigeonVar_messageChannelSuffix';
     final BasicMessageChannel<Object?> pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
@@ -1050,7 +1050,7 @@ class InAppPurchaseApi {
       binaryMessenger: pigeonVar_binaryMessenger,
     );
     final List<Object?>? pigeonVar_replyList =
-        await pigeonVar_channel.send(<Object?>[callbackHandle, billingMode, pendingPurchasesParams]) as List<Object?>?;
+        await pigeonVar_channel.send(<Object?>[callbackHandle, billingMode, shouldEnableExternalOffer, pendingPurchasesParams]) as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
     } else if (pigeonVar_replyList.length > 1) {
