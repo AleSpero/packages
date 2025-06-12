@@ -481,11 +481,11 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
 
   @Override
   public void startConnection(
-      @NonNull Long handle,
-      @NonNull PlatformBillingChoiceMode billingMode,
-      boolean shouldEnableExternalOffers,
-      @NonNull Messages.PlatformPendingPurchasesParams pendingPurchasesParams,
-      @NonNull Result<PlatformBillingResult> result) {
+          @NonNull Long handle,
+          @NonNull PlatformBillingChoiceMode billingMode,
+          @NonNull Boolean shouldEnableExternalOffers,
+          @NonNull Messages.PlatformPendingPurchasesParams pendingPurchasesParams,
+          @NonNull Result<PlatformBillingResult> result) {
     if (billingClient == null) {
       billingClient =
           billingClientFactory.createBillingClient(
