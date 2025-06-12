@@ -46,7 +46,7 @@ final class BillingClientFactoryImpl implements BillingClientFactory {
         break;
     }
     if(shouldEnableExternalOffers) {
-      builder.enableExternalOffers();
+      builder.enableExternalOffer();
     }
     return builder.setListener(new PluginPurchaseListener(callbackApi)).build();
   }

@@ -12,6 +12,7 @@ import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingConfig;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ExternalOfferReportingDetails;
 import com.android.billingclient.api.PendingPurchasesParams;
 import com.android.billingclient.api.ProductDetails;
 import com.android.billingclient.api.Purchase;
@@ -385,6 +386,15 @@ import java.util.Locale;
         .setBillingResult(fromBillingResult(result))
         .setExternalTransactionToken(details == null ? "" : details.getExternalTransactionToken())
         .build();
+  }
+
+  static @NonNull PlatformAlternativeBillingOnlyReportingDetailsResponse
+  fromExternalOfferReportingDetails(
+          @NonNull BillingResult result, @Nullable ExternalOfferReportingDetails details) {
+    return new PlatformAlternativeBillingOnlyReportingDetailsResponse.Builder()
+            .setBillingResult(fromBillingResult(result))
+            .setExternalTransactionToken(details == null ? "" : details.getExternalTransactionToken())
+            .build();
   }
 
   static @NonNull PendingPurchasesParams toPendingPurchasesParams(

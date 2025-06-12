@@ -7,6 +7,7 @@ package io.flutter.plugins.inapppurchase;
 import static io.flutter.plugins.inapppurchase.Translator.fromAlternativeBillingOnlyReportingDetails;
 import static io.flutter.plugins.inapppurchase.Translator.fromBillingConfig;
 import static io.flutter.plugins.inapppurchase.Translator.fromBillingResult;
+import static io.flutter.plugins.inapppurchase.Translator.fromExternalOfferReportingDetails;
 import static io.flutter.plugins.inapppurchase.Translator.fromProductDetailsList;
 import static io.flutter.plugins.inapppurchase.Translator.fromPurchaseHistoryRecordList;
 import static io.flutter.plugins.inapppurchase.Translator.fromPurchasesList;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.android.billingclient.api.AcknowledgePurchaseParams;
+import com.android.billingclient.api.AlternativeBillingOnlyReportingDetails;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -177,7 +179,7 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
   }
 
   @Override
-  void isExternalOfferAvailableAsync(
+  public void isExternalOfferAvailableAsync(
           @NonNull Result<PlatformBillingResult> result
   ){
     if (billingClient == null) {
@@ -193,7 +195,7 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
   }
 
   @Override
-  void showExternalOfferInformationDialog(@NonNull Result<PlatformBillingResult> result
+  public void showExternalOfferInformationDialog(@NonNull Result<PlatformBillingResult> result
   ){
     if (billingClient == null) {
       result.error(getNullBillingClientError());
@@ -212,7 +214,7 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
   }
 
   @Override
-  void createExternalOfferReportingDetailsAsync(
+  public void createExternalOfferReportingDetailsAsync(
           @NonNull Result<Messages.PlatformAlternativeBillingOnlyReportingDetailsResponse> result
   ) {
     if (billingClient == null) {
@@ -223,7 +225,7 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
       billingClient.createExternalOfferReportingDetailsAsync(
               ((billingResult, externalOfferReportingDetails) ->
                       result.success(
-                              fromAlternativeBillingOnlyReportingDetails(
+                              fromExternalOfferReportingDetails(
                                       billingResult, externalOfferReportingDetails))));
     } catch (RuntimeException e) {
       result.error(new FlutterError("error", e.getMessage(), Log.getStackTraceString(e)));
