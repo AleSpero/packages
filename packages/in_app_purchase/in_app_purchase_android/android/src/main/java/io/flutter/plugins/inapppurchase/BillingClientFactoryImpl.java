@@ -22,6 +22,7 @@ final class BillingClientFactoryImpl implements BillingClientFactory {
   public BillingClient createBillingClient(
       @NonNull Context context,
       @NonNull Messages.InAppPurchaseCallbackApi callbackApi,
+      boolean shouldEnableExternalOffers,
       PlatformBillingChoiceMode billingChoiceMode,
       Messages.PlatformPendingPurchasesParams pendingPurchasesParams) {
     BillingClient.Builder builder =
@@ -43,6 +44,9 @@ final class BillingClientFactoryImpl implements BillingClientFactory {
             "BillingClientFactoryImpl",
             "Unknown BillingChoiceMode " + billingChoiceMode + ", Defaulting to PLAY_BILLING_ONLY");
         break;
+    }
+    if(shouldEnableExternalOffers) {
+      builder.enableExternalOffers();
     }
     return builder.setListener(new PluginPurchaseListener(callbackApi)).build();
   }

@@ -445,6 +445,19 @@ abstract class InAppPurchaseApi {
   @async
   PlatformAlternativeBillingOnlyReportingDetailsResponse
       createAlternativeBillingOnlyReportingDetailsAsync();
+
+  /// Wraps BillingClient#isAlternativeBillingOnlyAvailableAsync().
+  @async
+  PlatformBillingResult isExternalOfferAvailableAsync();
+
+  /// Wraps BillingClient#showAlternativeBillingOnlyInformationDialog().
+  @async
+  PlatformBillingResult showExternalOfferInformationDialog();
+
+  /// Wraps BillingClient#createAlternativeBillingOnlyReportingDetailsAsync(AlternativeBillingOnlyReportingDetailsListener).
+  @async
+  PlatformAlternativeBillingOnlyReportingDetailsResponse
+  createExternalOfferReportingDetailsAsync();
 }
 
 @FlutterApi()

@@ -177,6 +177,60 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
   }
 
   @Override
+  void isExternalOfferAvailableAsync(
+          @NonNull Result<PlatformBillingResult> result
+  ){
+    if (billingClient == null) {
+      result.error(getNullBillingClientError());
+      return;
+    }
+    try {
+      billingClient.isExternalOfferAvailableAsync(
+              billingResult -> result.success(fromBillingResult(billingResult)));
+    } catch (RuntimeException e) {
+      result.error(new FlutterError("error", e.getMessage(), Log.getStackTraceString(e)));
+    }
+  }
+
+  @Override
+  void showExternalOfferInformationDialog(@NonNull Result<PlatformBillingResult> result
+  ){
+    if (billingClient == null) {
+      result.error(getNullBillingClientError());
+      return;
+    }
+    if (activity == null) {
+      result.error(new FlutterError(ACTIVITY_UNAVAILABLE, "Not attempting to show dialog", null));
+      return;
+    }
+    try {
+      billingClient.showExternalOfferInformationDialog(
+              activity, billingResult -> result.success(fromBillingResult(billingResult)));
+    } catch (RuntimeException e) {
+      result.error(new FlutterError("error", e.getMessage(), Log.getStackTraceString(e)));
+    }
+  }
+
+  @Override
+  void createExternalOfferReportingDetailsAsync(
+          @NonNull Result<Messages.PlatformAlternativeBillingOnlyReportingDetailsResponse> result
+  ) {
+    if (billingClient == null) {
+      result.error(getNullBillingClientError());
+      return;
+    }
+    try {
+      billingClient.createExternalOfferReportingDetailsAsync(
+              ((billingResult, externalOfferReportingDetails) ->
+                      result.success(
+                              fromAlternativeBillingOnlyReportingDetails(
+                                      billingResult, externalOfferReportingDetails))));
+    } catch (RuntimeException e) {
+      result.error(new FlutterError("error", e.getMessage(), Log.getStackTraceString(e)));
+    }
+  }
+
+  @Override
   public void getBillingConfigAsync(
       @NonNull Result<Messages.PlatformBillingConfigResponse> result) {
     if (billingClient == null) {
@@ -427,12 +481,13 @@ class MethodCallHandlerImpl implements Application.ActivityLifecycleCallbacks, I
   public void startConnection(
       @NonNull Long handle,
       @NonNull PlatformBillingChoiceMode billingMode,
+      boolean shouldEnableExternalOffers,
       @NonNull Messages.PlatformPendingPurchasesParams pendingPurchasesParams,
       @NonNull Result<PlatformBillingResult> result) {
     if (billingClient == null) {
       billingClient =
           billingClientFactory.createBillingClient(
-              applicationContext, callbackApi, billingMode, pendingPurchasesParams);
+              applicationContext, callbackApi, shouldEnableExternalOffers, billingMode, pendingPurchasesParams);
     }
 
     try {

@@ -26,6 +26,7 @@ interface BillingClientFactory {
   BillingClient createBillingClient(
       @NonNull Context context,
       @NonNull Messages.InAppPurchaseCallbackApi callbackApi,
+      boolean shouldEnableExternalOffers,
       PlatformBillingChoiceMode billingChoiceMode,
       Messages.PlatformPendingPurchasesParams pendingPurchasesParams);
 }
