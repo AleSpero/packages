@@ -322,6 +322,27 @@ class BillingClient {
     return alternativeBillingOnlyReportingDetailsWrapperFromPlatform(
         await _hostApi.createAlternativeBillingOnlyReportingDetailsAsync());
   }
+
+  /// Checks if "AlterntitiveBillingOnly" feature is available.
+  Future<BillingResultWrapper> isExternalOfferAvailableAsync() async {
+    return resultWrapperFromPlatform(
+        await _hostApi.isExternalOfferAvailableAsync());
+  }
+
+  /// Shows the alternative billing only information dialog on top of the calling app.
+  Future<BillingResultWrapper>
+  showExternalOfferInformationDialog() async {
+    return resultWrapperFromPlatform(
+        await _hostApi.showExternalOfferInformationDialog());
+  }
+
+  /// The details used to report transactions made via alternative billing
+  /// without user choice to use Google Play billing.
+  Future<AlternativeBillingOnlyReportingDetailsWrapper>
+  createExternalOfferReportingDetailsAsync() async {
+    return alternativeBillingOnlyReportingDetailsWrapperFromPlatform(
+        await _hostApi.createExternalOfferReportingDetailsAsync());
+  }
 }
 
 /// Implementation of InAppPurchaseCallbackApi, for use by [BillingClient].
