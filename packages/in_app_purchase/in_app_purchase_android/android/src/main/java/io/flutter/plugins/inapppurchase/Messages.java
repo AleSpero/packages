@@ -3114,7 +3114,7 @@ public class Messages {
     @NonNull 
     Boolean isReady();
     /** Wraps BillingClient#startConnection(BillingClientStateListener). */
-    void startConnection(@NonNull Long callbackHandle, @NonNull PlatformBillingChoiceMode billingMode, @NonNull PlatformPendingPurchasesParams pendingPurchasesParams, @NonNull Result<PlatformBillingResult> result);
+    void startConnection(@NonNull Long callbackHandle, @NonNull PlatformBillingChoiceMode billingMode, boolean enableExternalOffers, @NonNull PlatformPendingPurchasesParams pendingPurchasesParams, @NonNull Result<PlatformBillingResult> result);
     /** Wraps BillingClient#endConnection(BillingClientStateListener). */
     void endConnection();
     /** Wraps BillingClient#getBillingConfigAsync(GetBillingConfigParams, BillingConfigResponseListener). */
